@@ -1,26 +1,23 @@
-"use client";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+'use client';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 
 const EditTicketForm = ({ ticket }) => {
-  const EDITMODE = ticket._id === "new" ? false : true;
+  const EDITMODE = ticket._id === 'new' ? false : true;
   const router = useRouter();
   const startingTicketData = {
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     priority: 1,
     progress: 0,
-    status: "not started",
-    category: "Hardware Problem",
+    status: 'not started',
+    category: 'Hardware Problem',
   };
 
   if (EDITMODE) {
-    startingTicketData["title"] = ticket.title;
-    startingTicketData["description"] = ticket.description;
-    startingTicketData["priority"] = ticket.priority;
-    startingTicketData["progress"] = ticket.progress;
-    startingTicketData["status"] = ticket.status;
-    startingTicketData["category"] = ticket.category;
+    for (let i in startingTicketData) {
+      startingTicketData[i] = ticket[i];
+    }
   }
 
   const [formData, setFormData] = useState(startingTicketData);
@@ -38,38 +35,33 @@ const EditTicketForm = ({ ticket }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let url = '/api/Tickets';
+    let method = 'POST';
     if (EDITMODE) {
-      const res = await fetch(`/api/Tickets/${ticket._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({ formData }),
-      });
-      if (!res.ok) {
-        throw new Error("Failed to update ticket");
-      }
-    } else {
-      const res = await fetch("/api/Tickets", {
-        method: "POST",
-        body: JSON.stringify({ formData }),
-        //@ts-ignore
-        "Content-Type": "application/json",
-      });
-      if (!res.ok) {
-        throw new Error("Failed to create ticket");
-      }
+      url += '/' + ticket._id;
+      method = 'PUT';
+    }
+
+    const res = await fetch(url, {
+      method: method,
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({ formData }),
+    });
+    if (!res.ok) {
+      throw new Error('Failed to update ticket');
     }
 
     router.refresh();
-    router.push("/");
+    router.push('/');
   };
 
   const categories = [
-    "Hardware Problem",
-    "Software Problem",
-    "Application Deveopment",
-    "Project",
+    'Hardware Problem',
+    'Software Problem',
+    'Application Deveopment',
+    'Project',
   ];
 
   return (
@@ -79,7 +71,7 @@ const EditTicketForm = ({ ticket }) => {
         method="post"
         className="flex flex-col gap-3 w-1/2"
       >
-        <h3>{EDITMODE ? "Update Your Ticket" : "Create New Ticket"}</h3>
+        <h3>{EDITMODE ? 'Update Your Ticket' : 'Create New Ticket'}</h3>
         <label>Title</label>
         <input
           id="title"
@@ -178,7 +170,7 @@ const EditTicketForm = ({ ticket }) => {
         <input
           type="submit"
           className="btn max-w-xs"
-          value={EDITMODE ? "Update Ticket" : "Create Ticket"}
+          value={EDITMODE ? 'Update Ticket' : 'Create Ticket'}
         />
       </form>
     </div>
