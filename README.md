@@ -1,5 +1,5 @@
 # <a href="https://www.udemy.com/course/nextjs14-ticketapp/?couponCode=DD85199B00481F602C1F" target="_blank">Updated Version Ticket Application using Typscript</a>
-Want to take this project to the next level join our <a href="https://www.udemy.com/course/nextjs14-ticketapp/?couponCode=DD85199B00481F602C1F" target="_blank">
+Want to take this project to the next level join our <a href="https://www.udemy.com/course/nextjs14-ticketapp/?couponCode=GITHUBTICKETAPP" target="_blank">
 Udemy Course</a>. Support the channel for only $13
 - New Features
   - Prisma
